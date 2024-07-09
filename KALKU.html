@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Konversi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        h1 {
+            text-align: center;
+        }
+        select, input, button {
+            padding: 10px;
+            margin: 10px 0;
+            width: calc(100% - 22px);
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kalkulator Konversi</h1>
+
+        <h2>Konversi Panjang</h2>
+        <input type="number" id="lengthInput" placeholder="Masukkan nilai">
+        <select id="lengthFrom">
+            <option value="meter">Meter</option>
+            <option value="kilometer">Kilometer</option>
+            <option value="centimeter">Centimeter</option>
+            <option value="milimeter">Milimeter</option>
+            <option value="mile">Mil</option>
+            <option value="yard">Yard</option>
+            <option value="foot">Foot</option>
+            <option value="inch">Inch</option>
+        </select>
+        <select id="lengthTo">
+            <option value="meter">Meter</option>
+            <option value="kilometer">Kilometer</option>
+            <option value="centimeter">Centimeter</option>
+            <option value="milimeter">Milimeter</option>
+            <option value="mile">Mil</option>
+            <option value="yard">Yard</option>
+            <option value="foot">Foot</option>
+            <option value="inch">Inch</option>
+        </select>
+        <button onclick="convertLength()">Konversi Panjang</button>
+        <div class="result" id="lengthResult"></div>
+
+        <h2>Konversi Suhu</h2>
+        <input type="number" id="tempInput" placeholder="Masukkan nilai">
+        <select id="tempFrom">
+            <option value="celsius">Celsius</option>
+            <option value="fahrenheit">Fahrenheit</option>
+            <option value="kelvin">Kelvin</option>
+        </select>
+        <select id="tempTo">
+            <option value="celsius">Celsius</option>
+            <option value="fahrenheit">Fahrenheit</option>
+            <option value="kelvin">Kelvin</option>
+        </select>
+        <button onclick="convertTemperature()">Konversi Suhu</button>
+        <div class="result" id="tempResult"></div>
+
+        <h2>Konversi Mata Uang</h2>
+        <input type="number" id="currencyInput" placeholder="Masukkan nilai">
+        <select id="currencyFrom">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="IDR">IDR</option>
+            <!-- Tambahkan mata uang lainnya jika diperlukan -->
+        </select>
+        <select id="currencyTo">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="IDR">IDR</option>
+            <!-- Tambahkan mata uang lainnya jika diperlukan -->
+        </select>
+        <button onclick="convertCurrency()">Konversi Mata Uang</button>
+        <div class="result" id="currencyResult"></div>
+
+        <h2>Konversi Bilangan</h2>
+        <input type="number" id="numberInput" placeholder="Masukkan nilai">
+        <select id="numberFrom">
+            <option value="decimal">Desimal</option>
+            <option value="hexadecimal">Heksadesimal</option>
+            <option value="octal">Oktal</option>
+            <option value="binary">Biner</option>
+        </select>
+        <select id="numberTo">
+            <option value="decimal">Desimal</option>
+            <option value="hexadecimal">Heksadesimal</option>
+            <option value="octal">Oktal</option>
+            <option value="binary">Biner</option>
+        </select>
+        <button onclick="convertNumber()">Konversi Bilangan</button>
+        <div class="result" id="numberResult"></div>
+    </div>
+
+    <script>
+        function convertLength() {
+            const input = parseFloat(document.getElementById('lengthInput').value);
+            const from = document.getElementById('lengthFrom').value;
+            const to = document.getElementById('lengthTo').value;
+            const factor = {
+                meter: 1,
+                kilometer: 0.001,
+                centimeter: 100,
+                milimeter: 1000,
+                mile: 0.000621371,
+                yard: 1.09361,
+                foot: 3.28084,
+                inch: 39.3701
+            };
+            const result = input * (factor[to] / factor[from]);
+            document.getElementById('lengthResult').innerText = `${input} ${from} = ${result} ${to}`;
+        }
+
+        function convertTemperature() {
+            const input = parseFloat(document.getElementById('tempInput').value);
+            const from = document.getElementById('tempFrom').value;
+            const to = document.getElementById('tempTo').value;
+            let result;
+
+            if (from === 'celsius') {
+                if (to === 'fahrenheit') {
+                    result = (input * 9/5) + 32;
+                } else if (to === 'kelvin') {
+                    result = input + 273.15;
+                } else {
+                    result = input;
+                }
+            } else if (from === 'fahrenheit') {
+                if (to === 'celsius') {
+                    result = (input - 32) * 5/9;
+                } else if (to === 'kelvin') {
+                    result = ((input - 32) * 5/9) + 273.15;
+                } else {
+                    result = input;
+                }
+            } else if (from === 'kelvin') {
+                if (to === 'celsius') {
+                    result = input - 273.15;
+                } else if (to === 'fahrenheit') {
+                    result = ((input - 273.15) * 9/5) + 32;
+                } else {
+                    result = input;
+                }
+            }
+
+            document.getElementById('tempResult').innerText = `${input} ${from} = ${result} ${to}`;
+        }
+
+        async function convertCurrency() {
+            const input = parseFloat(document.getElementById('currencyInput').value);
+            const from = document.getElementById('currencyFrom').value;
+            const to = document.getElementById('currencyTo').value;
+
+            const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${from}`);
+            const data = await response.json();
+            const rate = data.rates[to];
+            const result = input * rate;
+
+            document.getElementById('currencyResult').innerText = `${input} ${from} = ${result} ${to}`;
+        }
+
+        function convertNumber() {
+            const input = document.getElementById('numberInput').value;
+            const from = document.getElementById('numberFrom').value;
+            const to = document.getElementById('numberTo').value;
+            let result;
+
+            if (from === 'decimal') {
+                if (to === 'hexadecimal') {
+                    result = parseInt(input).toString(16);
+                } else if (to === 'octal') {
+                    result = parseInt(input).toString(8);
+                } else if (to === 'binary') {
+                    result = parseInt(input).toString(2);
+                } else {
+                    result = input;
+                }
+            } else {
+                const decimal = from === 'hexadecimal' ? parseInt(input, 16)
+                             : from === 'octal' ? parseInt(input, 8)
+                             : from === 'binary' ? parseInt(input, 2)
+                             : parseInt(input);
+
+                if (to === 'decimal') {
+                    result = decimal;
+                } else if (to === 'hexadecimal') {
+                    result = decimal.toString(16);
+                } else if (to === 'octal') {
+                    result = decimal.toString(8);
+                } else if (to === 'binary') {
+                    result = decimal.toString(2);
+                }
+            }
+
+            document.getElementById('numberResult').innerText = `${input} ${from} = ${result} ${to}`;
+        }
+    </script>
+</body>
+</html>
